@@ -1,15 +1,15 @@
-﻿@model Funding_MVC_.Data.FundCategory
+﻿@model FundCategoryVM
 
 @{
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
+<h1>Edit Fund Category</h1>
 
-<h4>FundCategory</h4>
+
 <hr />
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-8">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
@@ -22,25 +22,11 @@
                 <input asp-for="DefaultAmount" class="form-control" />
                 <span asp-validation-for="DefaultAmount" class="text-danger"></span>
             </div>
-            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="Id" /> <!--edit form should be with id-->
             <div class="form-group">
-                <label asp-for="DatePosted" class="control-label"></label>
-                <input asp-for="DatePosted" class="form-control" />
-                <span asp-validation-for="DatePosted" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DateEdited" class="control-label"></label>
-                <input asp-for="DateEdited" class="form-control" />
-                <span asp-validation-for="DateEdited" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Save" class="btn btn-danger" />
+                 <a asp-action="Index" class="btn btn-dark">Back to List</a>
             </div>
         </form>
     </div>
 </div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-

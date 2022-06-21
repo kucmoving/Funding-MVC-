@@ -29,11 +29,6 @@ namespace Funding_MVC_.Controllers
             return View(fundCategories);
         }
 
-
-
-
-
-
         // GET: FundCategories/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -51,10 +46,6 @@ namespace Funding_MVC_.Controllers
 
             return View(fundCategory);
         }
-
-
-
-
 
 
         // GET: FundCategories/Create
@@ -82,10 +73,6 @@ namespace Funding_MVC_.Controllers
 
 
 
-
-
-
-
         // GET: FundCategories/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -99,7 +86,9 @@ namespace Funding_MVC_.Controllers
             {
                 return NotFound();
             }
-            return View(fundCategory);
+
+            var fundCategoryVM = _mapper.Map<FundCategoryVM>(fundCategory);
+            return View(fundCategoryVM);
         }
 
         // POST: FundCategories/Edit/5
@@ -107,9 +96,9 @@ namespace Funding_MVC_.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Name,DefaultAmount,Id,DatePosted,DateEdited")] FundCategory fundCategory)
+        public async Task<IActionResult> Edit(int id, FundCategoryVM fundCategoryVM)
         {
-            if (id != fundCategory.Id)
+            if (id != fundCategoryVM.Id)
             {
                 return NotFound();
             }
@@ -118,12 +107,13 @@ namespace Funding_MVC_.Controllers
             {
                 try
                 {
+                    var fundCategory = _mapper.Map<FundCategory>(fundCategoryVM);
                     _context.Update(fundCategory);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!FundCategoryExists(fundCategory.Id))
+                    if (!FundCategoryExists(fundCategoryVM.Id))
                     {
                         return NotFound();
                     }
@@ -134,7 +124,7 @@ namespace Funding_MVC_.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(fundCategory);
+            return View(fundCategoryVM);
         }
 
         // GET: FundCategories/Delete/5
