@@ -1,4 +1,6 @@
 using Funding_MVC_.Data;
+using Funding_MVC_.Interface;
+using Funding_MVC_.Repository;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,6 +16,8 @@ builder.Services.AddDefaultIdentity<Staff>(options => options.SignIn.RequireConf
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+builder.Services.AddScoped<IFundCategoryRepository, FundCategoryRepository>();
 
 var app = builder.Build();
 

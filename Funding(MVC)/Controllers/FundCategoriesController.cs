@@ -8,43 +8,42 @@ using Microsoft.EntityFrameworkCore;
 using Funding_MVC_.Data;
 using AutoMapper;
 using Funding_MVC_.Models;
+using Funding_MVC_.Interface;
 
 namespace Funding_MVC_.Controllers
 {
     public class FundCategoriesController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IFundCategoryRepository _fundCategoryRepository;
         private readonly IMapper _mapper;
 
-        public FundCategoriesController(ApplicationDbContext context, IMapper mapper)
+        public FundCategoriesController(IFundCategoryRepository fundCategoryRepository, IMapper mapper)
         {
-            _context = context;
+            _fundCategoryRepository = fundCategoryRepository;
             _mapper = mapper;
         }
+
+
 
         // GET: FundCategories  / have to modify a little bit
         public async Task<IActionResult> Index()
         {
-            var fundCategories = _mapper.Map<List<FundCategoryVM>>(await _context.FundCategories.ToListAsync());
+            var fundCategories = _mapper.Map<List<FundCategoryVM>>(await _fundCategoryRepository.GetAllAsync());
             return View(fundCategories);
         }
+
+
 
         // GET: FundCategories/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.FundCategories == null)
-            {
-                return NotFound();
-            }
-
-            var fundCategory = await _context.FundCategories
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var fundCategory = await _fundCategoryRepository.GetAsync(id);
             if (fundCategory == null)
             {
                 return NotFound();
             }
-
-            return View(fundCategory);
+            var fundCategoryVM = _mapper.Map<FundCategoryVM>(fundCategory);
+            return View(fundCategoryVM);
         }
 
 
@@ -53,6 +52,9 @@ namespace Funding_MVC_.Controllers
         {
             return View();
         }
+
+
+
 
         // POST: FundCategories/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
@@ -64,30 +66,18 @@ namespace Funding_MVC_.Controllers
             if (ModelState.IsValid)
             {
                 var fundCategory = _mapper.Map<FundCategory>(fundCategoryVM);
-                _context.Add(fundCategory);
-                await _context.SaveChangesAsync();
+                await _fundCategoryRepository.AddAsync(fundCategory);
                 return RedirectToAction(nameof(Index));
             }
             return View(fundCategoryVM);
         }
 
 
-
         // GET: FundCategories/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.FundCategories == null)
-            {
-                return NotFound();
-            }
 
-            var fundCategory = await _context.FundCategories.FindAsync(id);
-            if (fundCategory == null)
-            {
-                return NotFound();
-            }
-
-            var fundCategoryVM = _mapper.Map<FundCategoryVM>(fundCategory);
+            var fundCategoryVM = _mapper.Map<FundCategoryVM>(id);
             return View(fundCategoryVM);
         }
 
@@ -108,12 +98,11 @@ namespace Funding_MVC_.Controllers
                 try
                 {
                     var fundCategory = _mapper.Map<FundCategory>(fundCategoryVM);
-                    _context.Update(fundCategory);
-                    await _context.SaveChangesAsync();
+                    await _fundCategoryRepository.UpdateAsync(fundCategory);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!FundCategoryExists(fundCategoryVM.Id))
+                    if (!await FundCategoryExistsAsync(fundCategoryVM.Id))
                     {
                         return NotFound();
                     }
@@ -127,27 +116,6 @@ namespace Funding_MVC_.Controllers
             return View(fundCategoryVM);
         }
 
-        // GET: FundCategories/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null || _context.FundCategories == null)
-            {
-                return NotFound();
-            }
-
-            var fundCategory = await _context.FundCategories
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (fundCategory == null)
-            {
-                return NotFound();
-            }
-
-            return View(fundCategory);
-        }
-
-
-
-
 
 
         // POST: FundCategories/Delete/5          / have to change a little bit
@@ -155,16 +123,13 @@ namespace Funding_MVC_.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-
-            var fundCategory = await _context.FundCategories.FindAsync(id);
-                _context.FundCategories.Remove(fundCategory);
-            await _context.SaveChangesAsync();
+            await _fundCategoryRepository.DeleteAsync(id);
             return RedirectToAction(nameof(Index));
         }
 
-        private bool FundCategoryExists(int id)
+        private async Task<bool> FundCategoryExistsAsync(int id)
         {
-          return (_context.FundCategories?.Any(e => e.Id == id)).GetValueOrDefault();
+            return await _fundCategoryRepository.Exists(id);
         }
     }
 }
