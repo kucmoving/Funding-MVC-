@@ -9,9 +9,11 @@ using Funding_MVC_.Data;
 using AutoMapper;
 using Funding_MVC_.Models;
 using Funding_MVC_.Interface;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Funding_MVC_.Controllers
 {
+    [Authorize]
     public class FundCategoriesController : Controller
     {
         private readonly IFundCategoryRepository _fundCategoryRepository;
@@ -52,8 +54,6 @@ namespace Funding_MVC_.Controllers
         {
             return View();
         }
-
-
 
 
         // POST: FundCategories/Create

@@ -14,10 +14,10 @@ namespace Funding_MVC_.Configurations.entities
                 new Staff
                 {
                     Id = "e371dd8f-2987-4f4e-a373-e97dec6a044b",
-                    NormalizedEmail = "ADMIN@ADMIN.COM",
-                    Email = "admin999@staff.com",
-                    NormalizedUserName = "ADMIN@ADMIN.COM",
-                    UserName = "admin999@staff.com",
+                    NormalizedEmail = "ADMIN999@ADMIN.COM",
+                    Email = "admin999@admin.com",
+                    NormalizedUserName = "ADMIN999@ADMIN.COM",
+                    UserName = "admin999@admin.com",
                     Name = "iamadmin",
                     Nickname = "Mr. Admin",
                     PasswordHash = hasher.HashPassword(null, "From1995*"),
