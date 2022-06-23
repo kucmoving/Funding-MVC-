@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace Funding_MVC_.Data.Migrations
+namespace Funding_MVC_.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
@@ -156,6 +156,48 @@ namespace Funding_MVC_.Data.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "e371dd8f-2987-4f4e-a373-e97dec6a044b",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "c7b7db8a-599f-426f-b941-482fb1d1d4f2",
+                            DateOfBirth = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateOfJoined = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "admin999@staff.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            Name = "iamadmin",
+                            Nickname = "Mr. Admin",
+                            NormalizedEmail = "ADMIN@ADMIN.COM",
+                            NormalizedUserName = "ADMIN@ADMIN.COM",
+                            PasswordHash = "AQAAAAEAACcQAAAAEGzpkQfzoPZ2QfFTuPC1SqyY20mfMMSfRAkRMZI7PKK7D+s1hoNI4rLhD2HbqC0sZg==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "4fa3ee19-3658-49dc-b6be-279c318e9378",
+                            TwoFactorEnabled = false,
+                            UserName = "admin999@staff.com"
+                        },
+                        new
+                        {
+                            Id = "ab8154b2-e26e-48a0-9168-7d1e63b53293",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "722281ab-9348-406d-bf71-0647e322f4a2",
+                            DateOfBirth = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateOfJoined = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "user999@staff.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            Name = "iamuser",
+                            Nickname = "Mr.user",
+                            NormalizedEmail = "USER999@STAFF.COM",
+                            NormalizedUserName = "USER999@STAFF.COM",
+                            PasswordHash = "AQAAAAEAACcQAAAAECWnWf57GwHJZaGEALOXN9Nk0JDDqa3weIrsdixhHASGChCMZW3nZ7Ui5Fe9qJc1AQ==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "3f03e0d6-6f7e-48a2-b28c-ed107e01ce73",
+                            TwoFactorEnabled = false,
+                            UserName = "user999@staff.com"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -183,6 +225,22 @@ namespace Funding_MVC_.Data.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "1371dd8f-2987-4f4e-a373-e97dec6a044b",
+                            ConcurrencyStamp = "ec93511d-ee38-44ef-8d30-719bc0eb6a39",
+                            Name = "Adminstartor",
+                            NormalizedName = "ADMINSTRATOR"
+                        },
+                        new
+                        {
+                            Id = "zb8154b2-e26e-48a0-9168-7d1e63b53293",
+                            ConcurrencyStamp = "5951ba73-139f-46b6-8833-55b6dc31a1d0",
+                            Name = "User",
+                            NormalizedName = "USER"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -272,6 +330,18 @@ namespace Funding_MVC_.Data.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "e371dd8f-2987-4f4e-a373-e97dec6a044b",
+                            RoleId = "1371dd8f-2987-4f4e-a373-e97dec6a044b"
+                        },
+                        new
+                        {
+                            UserId = "ab8154b2-e26e-48a0-9168-7d1e63b53293",
+                            RoleId = "zb8154b2-e26e-48a0-9168-7d1e63b53293"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
